@@ -8,8 +8,8 @@
 // This Reducer is the one that grabs all the other reducers, combines them into one, and
 // then connects to your store
 import {combineReducers} from 'redux';
-import UserReducer from './UserReducer';
-import ActiveUserReducer from './ActiveUserReducer';
+// import UserReducer from './UserReducer';
+// import ActiveUserReducer from './ActiveUserReducer';
 import CoinListReducer from './CoinListReducer';
 
 
@@ -19,8 +19,8 @@ import CoinListReducer from './CoinListReducer';
 const allReducers = combineReducers({
   coinList: CoinListReducer,
   
-  users: UserReducer,
-  activeUser: ActiveUserReducer
+  // users: UserReducer,
+  // activeUser: ActiveUserReducer
 });
 
 export default allReducers;

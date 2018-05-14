@@ -12,15 +12,15 @@ export function fetchCoins() {
   return function(dispatch) {
     dispatch({ type: "FETCH_COINS" });
 
-
     axios.get('http://localhost:3000/assets')
       .then(result => {
-        console.log('success:', result)
+        // console.log('success:', result)
         dispatch({ type: "FETCH_COINS_FULFILLED", payload: result.data });
         
       })
       .catch(error => {
         console.log('error:', error)
+        dispatch({ type: "FETCH_COINS_ERROR" });
       });
 
   }

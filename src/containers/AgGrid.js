@@ -11,25 +11,31 @@ import 'ag-grid/dist/styles/ag-theme-balham.css';
 // import 'ag-grid/dist/styles/ag-theme-dark.css';
 // import 'ag-grid/dist/styles/ag-theme-bootstrap.css';
 
-import dateFormat from 'dateformat';
-import Chart from 'chart.js';
 import $ from 'jquery'
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-// import {Tabs, Tab} from 'react-bootstrap-tabs';
-// import * as d3 from "d3";
 
 // libs within this app
 import { fetchCoins } from '../actions/FetchActions';
+import SpreadChart from '../components/SpreadChart';
+import TradeChart from '../components/TradeChart';
+import BidDepthChart from '../components/BidDepthChart';
+import AskDepthChart from '../components/AskDepthChart';
 
 class AgGrid extends Component {
 
   constructor(props) {
     super(props);
 
+    this.state = {
+      spreadData: null,
+      tradeData: null,
+      bidDepthData: null,
+      askDepthData: null,
+    }
     // This binding is necessary to make `this` work in the callback
     // this.refreshClick = this.refreshClick.bind(this);
     // this.onGridReady = this.onGridReady.bind(this);
     this.onRowSelected = this.onRowSelected.bind(this);
+    // this.onModelUpdated = this.onModelUpdated.bind(this);
   }
 
   componentWillMount() {
@@ -41,12 +47,12 @@ class AgGrid extends Component {
     return (
      <div className="row">
         <div className="col-md-6">
-         <div className="ag-theme-balham col-12 mb-4" style= {{ height: '600px' }}>
+         <div className="ag-theme-balham col-12 mb-4" style= {{ height: '480px' }}>
             <AgGridReact style= {{ height: '400px' }} enableSorting={true} enableFilter={true} 
               columnDefs={this.props.coinList.columnDefs} rowData={this.props.coinList.rowData}
-              // onGridReady={this.onGridReady} 
-              rowSelection="single"
-              onRowSelected={this.onRowSelected}
+              onGridReady={this.onGridReady} enableColResize={true} 
+              rowSelection="single" onRowSelected={this.onRowSelected}
+              // componentStateChanged={this.onModelUpdated}
               // rowClicked={this.onRowSelected}
               >
             </AgGridReact>
@@ -55,21 +61,11 @@ class AgGrid extends Component {
 
         <div className="col-md-6">
 
-          {/* <Tabs onSelect={(index, label) => console.log(label + ' selected')}>
-              <Tab label="Recent Spread">
-                <div>
-                <canvas id="spread-chart" width="400" height="400"></canvas>
-                </div>
-              </Tab>
-              <Tab label="Price Movement">
-                <div>
-                  <canvas id="trade-chart" width="400" height="400"></canvas>
-                </div>
-              </Tab>
-              <Tab label="Depth Chart">
-              Tab 2 content
-              </Tab>
-          </Tabs> */}
+          <div>
+
+
+            </div>
+
 
           <div>
 			<ul className="nav nav-tabs">
@@ -88,20 +84,16 @@ class AgGrid extends Component {
 			</ul>	
 		</div>
 		<section id="tab1" className="tab-content active">
-			<div id="spread-chart-container">
-			</div>
+      <SpreadChart data={ this.state.spreadData } />
 		</section>
 		<section id="tab2" className="tab-content hide">
-			<div id="trade-chart-container">
-			</div>
+    <TradeChart data={ this.state.tradeData } />
 		</section>
 		<section id="tab3" className="tab-content hide">
-    <div id="bid-depth-chart-container">
-			</div>
+    <BidDepthChart data={ this.state.depthData } />
 		</section>
     <section id="tab4" className="tab-content hide">
-    <div id="ask-depth-chart-container">
-			</div>
+    <AskDepthChart data={ this.state.depthData } />
 		</section>
 
         </div>
@@ -112,16 +104,9 @@ class AgGrid extends Component {
   }
 
   // in onGridReady, store the api for later use
-  onGridReady = (params) => {
-    this.api = params.api;
-    this.columnApi = params.columnApi;
-    // console.log('ready')
-  }
-
-  // use the api some point later!
-  // somePointLater() {
-  //   this.api.selectAll();
-  //   this.columnApi.setColumnVisible('country', visible);
+  // onGridReady = (params) => {
+  //   this.api = params.api;
+  //   this.columnApi = params.columnApi;
   // }
 
   // had to use a jquery implementation of the tabs cuz the bootstrap ones
@@ -155,226 +140,31 @@ class AgGrid extends Component {
   }
 
   onRowSelected(row) {
-    console.log(row)
+    // console.log(row)
     // only take action on the selected row
     // this event is fired on the row that is selected and also unselected
     if (row.node.selected) {
-      this.showSpreadChart(row.data.spreads);
-      this.showTradeChart(row.data.trades);
-      this.showBidDepthChart(row.data);
-      this.showAskDepthChart(row.data);
+      this.setState ( {
+        spreadData: row.data.spreads,
+        tradeData: row.data.trades,
+        depthData: row.data,
+      });
     }
-    
   }
 
-  showSpreadChart(data) {
-    const title = dateFormat(new Date(data[0].time * 1000), "dddd, mmmm dS, yyyy");
+  // onModelUpdated() {
+  //   console.log('updated')
+  // }
 
-    // const currentDate = dateFormat(new Date(), "mmmm d yyyy");
-    // const dateDisplay = currentDate
 
-    // console.log(data)
-    const times = data.map( spread => { 
-      // Create a new JavaScript Date object based on the timestamp
-      // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-      var date = new Date(spread.time*1000);
-      return dateFormat(date, "h:MM TT");
-    })
-    const bids = data.map( spread => { return spread.bid})
-    const asks = data.map( spread => { return spread.ask})
-    
-    // chartjs needs to be destoryed before a new one is added
-    // since we dont have access to the actual object, this is the best way to
-    // clear the canvas
-    document.getElementById("spread-chart-container").innerHTML = '&nbsp;';
-    document.getElementById("spread-chart-container").innerHTML = '<canvas id="spread-chart"></canvas>';
+  // autoSizeColumns() {
+  //   var allColumnIds = [];
+  //   this.columnApi.getAllColumns().forEach(function(column) {
+  //     allColumnIds.push(column.colId);
+  //   });
+  //   this.columnApi.autoSizeColumns(allColumnIds);
+  // }
 
-    new Chart(document.getElementById("spread-chart"), {
-      type: 'line',
-      data: {
-        labels: times,
-        datasets: [{ 
-          data: asks,
-          label: "Ask",
-          // borderColor: "blue",
-          borderColor: "#007bff",
-          fill: false
-        }, 
-          { 
-            data: bids,
-            label: "Bid",
-            borderColor: "orange",
-            fill: false
-          }, 
-        ]
-      },
-      options: { 
-        title: { display: true, text: title }, 
-        elements: { point: { radius: 0 } } 
-      }
-    });
-  }
-
-  showTradeChart(data) {
-    const title = dateFormat(new Date(data[0].time * 1000), "dddd, mmmm dS, yyyy");
-
-    // console.log(data)
-    const times = data.map( trade => { 
-      // Create a new JavaScript Date object based on the timestamp
-      // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-      var date = new Date(trade.time*1000);
-      return dateFormat(date, "h:MM TT");
-    })
-    const trades = data.map( trade => { return trade.price})
-    
-    // console.log(times)
-    // console.log(trades)
-    // destory old
-    // chart.destroy()
-
-    document.getElementById("trade-chart-container").innerHTML = '&nbsp;';
-    document.getElementById("trade-chart-container").innerHTML = '<canvas id="trade-chart"></canvas>';
-
-    // var ctx = document.getElementById("rade-chart").getContext("2d");
-    new Chart(document.getElementById("trade-chart"), {
-      type: 'line',
-      data: {
-        labels: times,
-        datasets: [{ 
-            data: trades,
-            label: "Price",
-            // borderColor: "gray",
-            // borderColor: "#FA5656",
-            borderColor: "#E82B2B",
-            fill: false
-          }
-        ]
-      },
-      options: { 
-        title: { display: true, text: title }, 
-        elements: { point: { radius: 0 } } // dont show the datapoints make the line easier to read
-      }
-    });
-  }
-
-  showBidDepthChart(data) {
-    const title = dateFormat(new Date(data.bids[0].timestamp * 1000), "dddd, mmmm dS, yyyy");
-
-    // const currentDate = dateFormat(new Date(), "mmmm d yyyy");
-    // const dateDisplay = currentDate
-
-    // console.log(data)
-    // const times = data.bids.map( depth => { 
-    //   // Create a new JavaScript Date object based on the timestamp
-    //   // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-    //   var date = new Date(depth.timestamp*1000);
-    //   return dateFormat(date, "h:MM TT");
-    // })
-    const bids = (data.bids.map( depth => { return depth.volume})).reverse();
-    const prices = (data.bids.map( depth => { return depth.price})).reverse();
-
-    // add up all the bids volumes by price to display in a graph
-    for (let i=0; i<bids.length; i++) {
-      let currentPrice = parseFloat(bids[i])
-      // loop thru the bids and add each amount to all the prev amounts
-      for (let j=0; j<i; j++) {
-        let newPrice = parseFloat(bids[j]) + currentPrice;
-        bids[j] = newPrice.toString();
-        // bids[i] += bids[j]
-      }
-    }
-
-    // const asks = data.asks.map( depth => { return depth.volume})
-    
-    // chartjs needs to be destoryed before a new one is added
-    // since we dont have access to the actual object, this is the best way to
-    // clear the canvas
-    document.getElementById("bid-depth-chart-container").innerHTML = '&nbsp;';
-    document.getElementById("bid-depth-chart-container").innerHTML = '<canvas id="bid-depth-chart"></canvas>';
-
-    new Chart(document.getElementById("bid-depth-chart"), {
-      type: 'line',
-      data: {
-        labels: prices,
-        datasets: [
-          { 
-            data: bids,
-            label: "Bid",
-            borderColor: "orange",
-            fill: false
-          }, 
-        ]
-      },
-      options: { 
-        title: { display: true, text: title }, 
-        elements: { point: { radius: 0 } } 
-      }
-    });
-  }
-  
-  showAskDepthChart(data) {
-    const title = dateFormat(new Date(data.asks[0].timestamp * 1000), "dddd, mmmm dS, yyyy");
-
-    // const currentDate = dateFormat(new Date(), "mmmm d yyyy");
-    // const dateDisplay = currentDate
-
-    // console.log(data)
-    // const times = data.asks.map( depth => { 
-    //   // Create a new JavaScript Date object based on the timestamp
-    //   // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-    //   var date = new Date(depth.timestamp*1000);
-    //   return dateFormat(date, "h:MM TT");
-    // })
-    const asks = data.asks.map( depth => { return depth.volume})
-    const prices = data.asks.map( depth => { return depth.price})
-
-    // add up all the asks volumes by price to display in a graph
-    asks.reverse();
-    for (let i=0; i<asks.length; i++) {
-      let currentPrice = parseFloat(asks[i])
-      // loop thru and add each amount to all the prev amounts
-      for (let j=0; j<i; j++) {
-        let newPrice = parseFloat(asks[j]) + currentPrice;
-        asks[j] = newPrice.toString();
-        // bids[i] += bids[j]
-      }
-    }
-    asks.reverse();
-
-    // const asks = data.asks.map( depth => { return depth.volume})
-    
-    // chartjs needs to be destoryed before a new one is added
-    // since we dont have access to the actual object, this is the best way to
-    // clear the canvas
-    document.getElementById("ask-depth-chart-container").innerHTML = '&nbsp;';
-    document.getElementById("ask-depth-chart-container").innerHTML = '<canvas id="ask-depth-chart"></canvas>';
-
-    new Chart(document.getElementById("ask-depth-chart"), {
-      type: 'line',
-      data: {
-        labels: prices,
-        datasets: [
-          { 
-          data: asks,
-          label: "Ask",
-          // borderColor: "blue",
-          borderColor: "#007bff",
-          fill: false
-          }, 
-          // { 
-          //   data: ask,
-          //   label: "Bid",
-          //   borderColor: "orange",
-          //   fill: false
-          // }, 
-        ]
-      },
-      options: { 
-        title: { display: true, text: title }, 
-        elements: { point: { radius: 0 } } 
-      }
-    });
-  }
 }
 
 
