@@ -23,8 +23,6 @@ export default function(state = {}, action) {
         ...state,
         loading: true
       }; 
-      // rowData = ;
-      // loading = true;
     // break;
 
     // we got the coins from the server
@@ -80,9 +78,6 @@ export default function(state = {}, action) {
         rowData: action.payload,
         loading: false
       }; 
-      // loading = false;
-      // rowData = action.payload;
-      // break;
 
     // start out with just the column headers and no data until we get something
     // from the server
@@ -92,8 +87,6 @@ export default function(state = {}, action) {
         rowData: null,
         loading: false
       }; 
-    // rowData = null;
-
   };
 
 

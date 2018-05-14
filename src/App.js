@@ -14,26 +14,10 @@ class App extends Component {
       <div className="App">
         <NavBar />
 
-
-
-
-
-
-
-  <div className="container-fluid pt-4">
-
-      <AgGrid />
-
-  </div>
-
-
-
-
-
-
-
-
-
+        <div className="container-fluid pt-4">
+          <AgGrid />
+        </div>
+        
         <Footer />
       </div>
     );

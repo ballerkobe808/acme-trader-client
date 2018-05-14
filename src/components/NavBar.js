@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-// simplified syntax to create a react component
+// Simple Navigation bar up top
 const NavBar = () => (
 
 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
