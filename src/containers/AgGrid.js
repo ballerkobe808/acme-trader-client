@@ -69,7 +69,7 @@ class AgGrid extends Component {
           </div>
 
 
-          <div>
+    <div className="tab-header">
 			<ul className="nav nav-tabs">
 				<li className="active">
 					<a href="#tab1">Recent Spread</a>

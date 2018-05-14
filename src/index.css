@@ -98,5 +98,12 @@ li {
   display: none;
 }
 
+.tab-content {
+  border: 1px solid #ddd;
+  border-top: none;
+}
 
+.tab-header {
+  margin-bottom: -20px;
+}
 /** End: to style navigation tab **/
