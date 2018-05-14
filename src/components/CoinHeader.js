@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 
-// import Chart from 'chart.js';
-// import dateFormat from 'dateformat';
-
 
 class CoinHeader extends Component {
 
-  constructor(props) {
-    super(props);
-
-    // this.state = { priceChange: '' }
-  }
-
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render () {
     let priceChange

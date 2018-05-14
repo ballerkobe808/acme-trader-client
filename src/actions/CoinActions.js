@@ -10,7 +10,7 @@ import axios from "axios";
 export function fetchCoins() {
 
   return function(dispatch) {
-    dispatch({ type: "FETCH_COINS" });
+    dispatch({ type: "FETCH_COINS_START" });
 
     axios.get('http://localhost:3000/assets')
       .then(result => {

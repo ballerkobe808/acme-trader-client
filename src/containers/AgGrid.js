@@ -14,7 +14,7 @@ import 'ag-grid/dist/styles/ag-theme-balham.css';
 import $ from 'jquery'
 
 // libs within this app
-import { fetchCoins } from '../actions/FetchActions';
+import { fetchCoins } from '../actions/CoinActions';
 import SpreadChart from '../components/SpreadChart';
 import TradeChart from '../components/TradeChart';
 import BidDepthChart from '../components/BidDepthChart';
@@ -34,12 +34,13 @@ class AgGrid extends Component {
       currentCoin: {}
     }
     // This binding is necessary to make `this` work in the callback
-    // this.refreshClick = this.refreshClick.bind(this);
+    this.refreshClick = this.refreshClick.bind(this);
     // this.onGridReady = this.onGridReady.bind(this);
     this.onRowSelected = this.onRowSelected.bind(this);
-    // this.onModelUpdated = this.onModelUpdated.bind(this);
   }
 
+  // when loading the container, then grab the coins and
+  // setup the tabs
   componentWillMount() {
     this.props.fetchCoins();
     this.bootstrapTabs();
@@ -47,64 +48,75 @@ class AgGrid extends Component {
 
   render() {
     return (
-     <div className="row">
-        <div className="col-md-6">
-         <div className="ag-theme-balham col-12 mb-4" style= {{ height: '480px' }}>
-            <AgGridReact style= {{ height: '400px' }} enableSorting={true} enableFilter={true} 
-              columnDefs={this.props.coinList.columnDefs} rowData={this.props.coinList.rowData}
-              onGridReady={this.onGridReady} enableColResize={true} 
-              rowSelection="single" onRowSelected={this.onRowSelected}
-              // componentStateChanged={this.onModelUpdated}
-              // rowClicked={this.onRowSelected}
-              >
-            </AgGridReact>
-          </div>
+      <div className="row">
+      <div className="col-md-6">
+        <div className="ag-theme-balham col-12 mb-4" style= {{ height: '480px' }}>
+          <AgGridReact style= {{ height: '400px' }} enableSorting={true} 
+          enableFilter={true} columnDefs={this.props.coinList.columnDefs} 
+          rowData={this.props.coinList.rowData} onGridReady={this.onGridReady} 
+          enableColResize={true} rowSelection="single" onRowSelected={this.onRowSelected}>
+          </AgGridReact>
+          <button onClick={this.refreshClick} className="btn btn-secondary form-control">Refresh Data</button>
         </div>
-
-        <div className="col-md-6">
-
-          <div>
-          <CoinHeader coin={ this.state.currentCoin } />
-
-          </div>
-
-
-    <div className="tab-header">
-			<ul className="nav nav-tabs">
-				<li className="active">
-					<a href="#tab1">Recent Spread</a>
-				</li>
-				<li>
-					<a href="#tab2">Price Movement</a>
-				</li>
-				<li>
-					<a href="#tab3">Bids Depth Chart</a>
-				</li>
-        <li>
-					<a href="#tab4">Asks Depth Chart</a>
-				</li>
-			</ul>	
-		</div>
-		<section id="tab1" className="tab-content active">
-      <SpreadChart data={ this.state.spreadData } />
-		</section>
-		<section id="tab2" className="tab-content hide">
-    <TradeChart data={ this.state.tradeData } />
-		</section>
-		<section id="tab3" className="tab-content hide">
-    <BidDepthChart data={ this.state.depthData } />
-		</section>
-    <section id="tab4" className="tab-content hide">
-    <AskDepthChart data={ this.state.depthData } />
-		</section>
-
-        </div>
-
-        {/* <button onClick={this.props.fetchCoins} className="btn btn-secondary">Refresh</button> */}
+        
       </div>
+    
+      <div className="col-md-6">
+        <CoinHeader coin={ this.state.currentCoin } />
+    
+        <div className="tab-header">
+          <ul className="nav nav-tabs">
+            <li className="active">
+              <a href="#tab1">Recent Spread</a>
+            </li>
+            <li>
+              <a href="#tab2">Price Movement</a>
+            </li>
+            <li>
+              <a href="#tab3">Bids Depth Chart</a>
+            </li>
+            <li>
+              <a href="#tab4">Asks Depth Chart</a>
+            </li>
+          </ul>
+        </div>
+
+        <section id="tab1" className="tab-content active">
+          <SpreadChart data={ this.state.spreadData } />
+        </section>
+        <section id="tab2" className="tab-content hide">
+          <TradeChart data={ this.state.tradeData } />
+        </section>
+        <section id="tab3" className="tab-content hide">
+          <BidDepthChart data={ this.state.depthData } />
+        </section>
+        <section id="tab4" className="tab-content hide">
+          <AskDepthChart data={ this.state.depthData } />
+        </section>
+      </div>
+    
+    </div>
+    
     );
   }
 
+
+  // user clicked to refresh data in the list
+  refreshClick() {
+    console.log('refresh')
+    // clear out the tab data
+    this.setState(
+      {
+        spreadData: null,
+        tradeData: null,
+        bidDepthData: null,
+        askDepthData: null,
+        currentCoin: {}
+      }
+    )
+    // repull the data
+    this.props.fetchCoins();
+  }
   // in onGridReady, store the api for later use
   // onGridReady = (params) => {
   //   this.api = params.api;
@@ -142,7 +154,6 @@ class AgGrid extends Component {
 
 
   onRowSelected(row) {
-    // console.log(row)
     // only take action on the selected row
     // this event is fired on the row that is selected and also unselected
     if (row.node.selected) {

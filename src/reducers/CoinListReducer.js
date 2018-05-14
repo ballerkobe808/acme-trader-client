@@ -4,7 +4,7 @@
 
 export default function(state = {}, action) {
 
-  // console.log(action);
+  console.log(action);
 
   // column definitions for our coin table
   const columnDefs = [
@@ -17,6 +17,12 @@ export default function(state = {}, action) {
   let rowData;
 
   switch (action.type) {
+    // clear the row data to start
+    // later on add loading properties
+    case 'FETCH_COINS_START':
+      rowData = null;
+    break;
+
     // we got the coins from the server
     case 'FETCH_COINS_FULFILLED':
       // map the data a little - should this be moved out of here to a mapping service???

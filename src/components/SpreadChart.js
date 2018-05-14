@@ -8,7 +8,6 @@ class SpreadChart extends Component {
 
   constructor(props) {
     super(props);
-    // this.state = { data: props.data }
     this.showChart = this.showChart.bind(this)
   }
 
@@ -19,7 +18,12 @@ class SpreadChart extends Component {
  
 
   showChart(data) {
-
+     // chartjs needs to be destoryed before a new one is added
+    // since we dont have access to the actual object, this is the best way to
+    // clear the canvas
+    document.getElementById("spread-chart-container").innerHTML = '&nbsp;';
+    document.getElementById("spread-chart-container").innerHTML = '<canvas id="spread-chart"></canvas>';
+    
     if (data == null) return; // fix this later
 
     const title = dateFormat(new Date(data[0].time * 1000), "dddd, mmmm dS, yyyy");
@@ -33,11 +37,7 @@ class SpreadChart extends Component {
     const bids = data.map( spread => { return spread.bid})
     const asks = data.map( spread => { return spread.ask})
     
-    // chartjs needs to be destoryed before a new one is added
-    // since we dont have access to the actual object, this is the best way to
-    // clear the canvas
-    document.getElementById("spread-chart-container").innerHTML = '&nbsp;';
-    document.getElementById("spread-chart-container").innerHTML = '<canvas id="spread-chart"></canvas>';
+   
 
     new Chart(document.getElementById("spread-chart"), {
       type: 'line',
