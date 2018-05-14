@@ -19,6 +19,7 @@ import SpreadChart from '../components/SpreadChart';
 import TradeChart from '../components/TradeChart';
 import BidDepthChart from '../components/BidDepthChart';
 import AskDepthChart from '../components/AskDepthChart';
+import CoinHeader from '../components/CoinHeader';
 
 class AgGrid extends Component {
 
@@ -30,6 +31,7 @@ class AgGrid extends Component {
       tradeData: null,
       bidDepthData: null,
       askDepthData: null,
+      currentCoin: {}
     }
     // This binding is necessary to make `this` work in the callback
     // this.refreshClick = this.refreshClick.bind(this);
@@ -62,9 +64,9 @@ class AgGrid extends Component {
         <div className="col-md-6">
 
           <div>
+          <CoinHeader coin={ this.state.currentCoin } />
 
-
-            </div>
+          </div>
 
 
           <div>
@@ -136,8 +138,8 @@ class AgGrid extends Component {
       $(target_tab_selector).addClass('active');
          });
       });
-
   }
+
 
   onRowSelected(row) {
     // console.log(row)
@@ -145,6 +147,7 @@ class AgGrid extends Component {
     // this event is fired on the row that is selected and also unselected
     if (row.node.selected) {
       this.setState ( {
+        currentCoin: row.data,
         spreadData: row.data.spreads,
         tradeData: row.data.trades,
         depthData: row.data,
