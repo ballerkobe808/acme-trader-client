@@ -163,7 +163,7 @@ class AgGrid extends Component {
       this.gridApi.showLoadingOverlay();
       this.props.fetchCoins();
       this.startPoll();
-    }, 10000);
+    }, 30000);
   }
 
   // had to use a jquery implementation of the tabs cuz the bootstrap ones
