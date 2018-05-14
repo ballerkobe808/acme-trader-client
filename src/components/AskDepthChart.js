@@ -27,7 +27,7 @@ class AskDepthChart extends Component {
 
     if (data == null) return; // fix this later
 
-    const title = dateFormat(new Date(data.asks[0].timestamp * 1000), "dddd, mmmm dS, yyyy");
+    // const title = dateFormat(new Date(), "dddd, mmmm dS, yyyy");
     const asks = data.asks.map( depth => { return depth.volume})
     const prices = data.asks.map( depth => { return parseFloat(depth.price).toFixed(2)})
 
@@ -57,7 +57,8 @@ class AskDepthChart extends Component {
         ]
       },
       options: { 
-        title: { display: true, text: title }, 
+        // title: { display: true, text: title }, 
+        title: { display: false }, 
         elements: { point: { radius: 0 } },
         animation: false
       }
@@ -66,7 +67,7 @@ class AskDepthChart extends Component {
 
   render () {
     return (
-      <div id="ask-depth-chart-container">
+      <div id="ask-depth-chart-container" className="mb-4">
       </div> 
     )
   }

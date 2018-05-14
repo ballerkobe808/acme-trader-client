@@ -22,7 +22,7 @@ class TradeChart extends Component {
 
     if (data == null) return; // fix this later
 
-    const title = dateFormat(new Date(data[0].time * 1000), "dddd, mmmm dS, yyyy");
+    // const title = dateFormat(new Date(data[0].time * 1000), "dddd, mmmm dS, yyyy");
     const times = data.map( trade => { 
       // Create a new JavaScript Date object based on the timestamp
       // multiplied by 1000 so that the argument is in milliseconds, not seconds.
@@ -44,7 +44,8 @@ class TradeChart extends Component {
         ]
       },
       options: { 
-        title: { display: true, text: title }, 
+        // title: { display: true, text: title }, 
+        title: { display: false }, 
         elements: { point: { radius: 0 } }, // dont show the datapoints make the line easier to read
         animation: false
       }
@@ -52,9 +53,20 @@ class TradeChart extends Component {
   }
 
   render () {
+
+    let dateTime = '';
+    if (this.props.data && this.props.data[0] && this.props.data[0].time) {
+      dateTime = dateFormat(new Date(this.props.data[0].time * 1000), "dddd, mmmm dS, yyyy");
+    }
+    
     return (
-      <div id="trade-chart-container">
-      </div> 
+      <div>
+        <div id="trade-chart-container">
+        </div> 
+        <div style={{textAlign: 'center', color: '777', fontSize: '0.8em', paddingBottom: '10px'}}>
+          {dateTime}
+        </div>
+      </div>
     )
   }
 

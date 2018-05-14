@@ -26,7 +26,7 @@ class SpreadChart extends Component {
     
     if (data == null) return; // fix this later
 
-    const title = dateFormat(new Date(data[0].time * 1000), "dddd, mmmm dS, yyyy");
+    // const title = dateFormat(new Date(data[0].time * 1000), "dddd, mmmm dS, yyyy");
 
     const times = data.map( spread => { 
       // Create a new JavaScript Date object based on the timestamp
@@ -58,7 +58,8 @@ class SpreadChart extends Component {
         ]
       },
       options: { 
-        title: { display: true, text: title }, 
+        // title: { display: true, text: title }, 
+        title: { display: false }, 
         elements: { point: { radius: 0 } },
         animation: false
       }
@@ -67,9 +68,20 @@ class SpreadChart extends Component {
 
 
   render () {
+
+    let dateTime = '';
+    if (this.props.data && this.props.data[0] && this.props.data[0].time) {
+      dateTime = dateFormat(new Date(this.props.data[0].time * 1000), "dddd, mmmm dS, yyyy");
+    }
+    
     return (
-      <div id="spread-chart-container">
-      </div> 
+      <div>
+        <div id="spread-chart-container">
+        </div> 
+        <div style={{textAlign: 'center', color: '777', fontSize: '0.8em', paddingBottom: '10px'}}>
+          {dateTime}
+        </div>
+      </div>
     )
   }
 

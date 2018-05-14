@@ -25,7 +25,8 @@ class BidDepthChart extends Component {
 
     if (data == null) return; // fix this later
 
-    const title = dateFormat(new Date(data.bids[0].timestamp * 1000), "dddd, mmmm dS, yyyy");
+    // const title = dateFormat(new Date(data.bids[0].timestamp * 1000), "dddd, mmmm dS, yyyy");
+    // const title = dateFormat(new Date(), "dddd, mmmm dS, yyyy");
     const bids = (data.bids.map( depth => { return depth.volume})).reverse();
     const prices = (data.bids.map( depth => { return parseFloat(depth.price).toFixed(2)})).reverse();
 
@@ -53,7 +54,8 @@ class BidDepthChart extends Component {
         ]
       },
       options: { 
-        title: { display: true, text: title }, 
+        // title: { display: true, text: title }, 
+        title: { display: false }, 
         elements: { point: { radius: 0 } },
         animation: false
       }
@@ -64,7 +66,7 @@ class BidDepthChart extends Component {
 
   render () {
     return (
-      <div id="bid-depth-chart-container">
+      <div id="bid-depth-chart-container" className="mb-4">
       </div> 
     )
   }

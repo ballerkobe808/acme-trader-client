@@ -130,15 +130,15 @@ class AgGrid extends Component {
   // user clicked to refresh data in the list
   refreshClick() {
     // clear out the tab data
-    this.setState(
-      {
-        spreadData: null,
-        tradeData: null,
-        bidDepthData: null,
-        askDepthData: null,
-        currentCoin: {}
-      }
-    )
+    // this.setState(
+    //   {
+    //     spreadData: null,
+    //     tradeData: null,
+    //     bidDepthData: null,
+    //     askDepthData: null,
+    //     currentCoin: {}
+    //   }
+    // )
     // repull the data
     this.gridApi.showLoadingOverlay();
     this.props.fetchCoins();
