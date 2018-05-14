@@ -31,11 +31,13 @@ class AgGrid extends Component {
       tradeData: null,
       bidDepthData: null,
       askDepthData: null,
-      currentCoin: {}
+      currentCoin: {},
+      // had to add a template cuz the default position was behind the selected row
+      overlayLoadingTemplate: '<span class="ag-overlay-loading-center" style="z-index: 100; position: relative;">Loading Data</span>',
     }
     // This binding is necessary to make `this` work in the callback
     this.refreshClick = this.refreshClick.bind(this);
-    // this.onGridReady = this.onGridReady.bind(this);
+    this.onGridReady = this.onGridReady.bind(this);
     this.onRowSelected = this.onRowSelected.bind(this);
   }
 
@@ -46,24 +48,45 @@ class AgGrid extends Component {
     this.bootstrapTabs();
   }
 
-  render() {
+ 
+  componentDidUpdate(prevProps, prevState) {
+    // if we came back and row data is there, clear any loading message
+    // if (!this.props.coinList.loading) {
+    //   this.gridApi.hideOverlay();
+    // }
+
+    console.log('componentdidupdate')
+    // clearTimeout(this.timeout);
+    // if (!nextProps.isFetching) {
+    //     this.startPoll();
+    // }
+  }
+
+  // startPoll() {
+  //   this.timeout = setTimeout(() => this.props.fetchCoins(), 15000);
+  // }
+
+  // table of cyrpto values on the left of the page
+  agGridComponent() {
     return (
-      <div className="row">
-      <div className="col-md-6">
-        <div className="ag-theme-balham col-12 mb-4" style= {{ height: '480px' }}>
-          <AgGridReact style= {{ height: '400px' }} enableSorting={true} 
-          enableFilter={true} columnDefs={this.props.coinList.columnDefs} 
-          rowData={this.props.coinList.rowData} onGridReady={this.onGridReady} 
-          enableColResize={true} rowSelection="single" onRowSelected={this.onRowSelected}>
-          </AgGridReact>
-          <button onClick={this.refreshClick} className="btn btn-secondary form-control">Refresh Data</button>
-        </div>
-        
+      <div className="ag-theme-balham col-12 mb-4" style= {{ height: '450px' }}>
+        <AgGridReact style= {{ height: '400px' }} enableSorting={true} 
+        enableFilter={true} columnDefs={this.props.coinList.columnDefs} 
+        rowData={this.props.coinList.rowData} onGridReady={this.onGridReady} 
+        overlayLoadingTemplate={this.state.overlayLoadingTemplate}
+        enableColResize={true} rowSelection="single" onRowSelected={this.onRowSelected}>
+        </AgGridReact>
+        <button onClick={this.refreshClick} className="btn btn-secondary form-control">Refresh Data</button>
       </div>
-    
-      <div className="col-md-6">
+  
+    );
+  }
+
+  // detail of a crypto that was selected
+  coinDetailsComponent() {
+    return (
+      <div>
         <CoinHeader coin={ this.state.currentCoin } />
-    
         <div className="tab-header">
           <ul className="nav nav-tabs">
             <li className="active">
@@ -80,7 +103,6 @@ class AgGrid extends Component {
             </li>
           </ul>
         </div>
-
         <section id="tab1" className="tab-content active">
           <SpreadChart data={ this.state.spreadData } />
         </section>
@@ -94,16 +116,31 @@ class AgGrid extends Component {
           <AskDepthChart data={ this.state.depthData } />
         </section>
       </div>
-    
+    );
+  }
+
+  render() {
+    let detailDisplay = 'none';
+    // only display the  coin detail component if there is information
+    if (this.state.currentCoin.name) {
+      detailDisplay = 'block';
+    }
+
+    return (
+      <div className="row">
+      <div className="col-md-6">
+        {this.agGridComponent()}
+      </div>
+      <div className="col-md-6 pt-2" style={{ display: detailDisplay}}>
+        {this.coinDetailsComponent()}
+      </div>
     </div>
-    
     );
   }
 
 
   // user clicked to refresh data in the list
   refreshClick() {
-    console.log('refresh')
     // clear out the tab data
     this.setState(
       {
@@ -115,13 +152,16 @@ class AgGrid extends Component {
       }
     )
     // repull the data
+    this.gridApi.showLoadingOverlay();
     this.props.fetchCoins();
   }
   // in onGridReady, store the api for later use
-  // onGridReady = (params) => {
-  //   this.api = params.api;
-  //   this.columnApi = params.columnApi;
-  // }
+  onGridReady = (params) => {
+    this.gridApi = params.api;
+    this.columnApi = params.columnApi;
+  }
+
+  
 
   // had to use a jquery implementation of the tabs cuz the bootstrap ones
   // werent just hiding the charts, but deleting them...
@@ -166,11 +206,6 @@ class AgGrid extends Component {
     }
   }
 
-  // onModelUpdated() {
-  //   console.log('updated')
-  // }
-
-
   // autoSizeColumns() {
   //   var allColumnIds = [];
   //   this.columnApi.getAllColumns().forEach(function(column) {
@@ -178,9 +213,7 @@ class AgGrid extends Component {
   //   });
   //   this.columnApi.autoSizeColumns(allColumnIds);
   // }
-
 }
-
 
 
 // this takes a piece of your application state and passes it in to your component
@@ -195,7 +228,6 @@ function mapStateToProps(state) {
     coinList: state.coinList
   }
 }
-
 
 // in order for actions to be hooked up correctly in redux, you need to pass the actions here
 // vs trying import it and use it directly in the component

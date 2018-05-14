@@ -15,7 +15,9 @@ class CoinHeader extends Component {
     // calculate the data to be displayed
     if (this.props.coin.trades) {
       let valChange = (parseFloat(this.props.coin.last_traded) - this.props.coin.trades[0].price)
-      priceChange = valChange.toFixed(2);
+      let decmialPlaces = this.props.coin.display_decimals
+      if (decmialPlaces == null || parseFloat(this.props.coin.display_decimals) < 3) decmialPlaces = 3;
+      priceChange = valChange.toFixed(decmialPlaces);
       priceChangePercent = ((valChange / this.props.coin.trades[0].price) * 100).toFixed(2)
     }
     if (priceChange < 0) changeColor = 'red'

@@ -29,7 +29,7 @@ class AskDepthChart extends Component {
 
     const title = dateFormat(new Date(data.asks[0].timestamp * 1000), "dddd, mmmm dS, yyyy");
     const asks = data.asks.map( depth => { return depth.volume})
-    const prices = data.asks.map( depth => { return depth.price})
+    const prices = data.asks.map( depth => { return parseFloat(depth.price).toFixed(2)})
 
     // add up all the asks volumes by price to display in a graph
     asks.reverse();

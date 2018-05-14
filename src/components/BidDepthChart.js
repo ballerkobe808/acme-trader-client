@@ -27,7 +27,7 @@ class BidDepthChart extends Component {
 
     const title = dateFormat(new Date(data.bids[0].timestamp * 1000), "dddd, mmmm dS, yyyy");
     const bids = (data.bids.map( depth => { return depth.volume})).reverse();
-    const prices = (data.bids.map( depth => { return depth.price})).reverse();
+    const prices = (data.bids.map( depth => { return parseFloat(depth.price).toFixed(2)})).reverse();
 
     // add up all the bids volumes by price to display in a graph
     for (let i=0; i<bids.length; i++) {
