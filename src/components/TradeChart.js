@@ -45,7 +45,8 @@ class TradeChart extends Component {
       },
       options: { 
         title: { display: true, text: title }, 
-        elements: { point: { radius: 0 } } // dont show the datapoints make the line easier to read
+        elements: { point: { radius: 0 } }, // dont show the datapoints make the line easier to read
+        animation: false
       }
     });
   }

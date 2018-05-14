@@ -58,7 +58,8 @@ class AskDepthChart extends Component {
       },
       options: { 
         title: { display: true, text: title }, 
-        elements: { point: { radius: 0 } } 
+        elements: { point: { radius: 0 } },
+        animation: false
       }
     });
   }

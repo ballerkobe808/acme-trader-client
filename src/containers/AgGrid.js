@@ -6,11 +6,6 @@ import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
-// import 'ag-grid/dist/styles/ag-theme-balham-dark.css';
-// import 'ag-grid/dist/styles/ag-theme-fresh.css';
-// import 'ag-grid/dist/styles/ag-theme-dark.css';
-// import 'ag-grid/dist/styles/ag-theme-bootstrap.css';
-
 import $ from 'jquery'
 
 // libs within this app
@@ -44,27 +39,20 @@ class AgGrid extends Component {
   // when loading the container, then grab the coins and
   // setup the tabs
   componentWillMount() {
-    this.props.fetchCoins();
     this.bootstrapTabs();
+
+    this.props.fetchCoins();
+    this.startPoll();
   }
 
  
   componentDidUpdate(prevProps, prevState) {
     // if we came back and row data is there, clear any loading message
-    // if (!this.props.coinList.loading) {
-    //   this.gridApi.hideOverlay();
-    // }
-
-    console.log('componentdidupdate')
-    // clearTimeout(this.timeout);
-    // if (!nextProps.isFetching) {
-    //     this.startPoll();
-    // }
+    if (this.gridApi && !this.props.coinList.loading) {
+      this.gridApi.hideOverlay();
+    }
   }
 
-  // startPoll() {
-  //   this.timeout = setTimeout(() => this.props.fetchCoins(), 15000);
-  // }
 
   // table of cyrpto values on the left of the page
   agGridComponent() {
@@ -154,14 +142,29 @@ class AgGrid extends Component {
     // repull the data
     this.gridApi.showLoadingOverlay();
     this.props.fetchCoins();
+    // clearTimeout(this.timeout);
+    this.startPoll();
   }
+
   // in onGridReady, store the api for later use
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
   }
 
-  
+   // pull data from the server every so many seconds
+  // this is a recursive function, but it can be stopped
+  // by clearing this.timeout
+  startPoll() {
+    console.log('startpoll')
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      console.log('executing')
+      this.gridApi.showLoadingOverlay();
+      this.props.fetchCoins();
+      this.startPoll();
+    }, 10000);
+  }
 
   // had to use a jquery implementation of the tabs cuz the bootstrap ones
   // werent just hiding the charts, but deleting them...
@@ -191,7 +194,6 @@ class AgGrid extends Component {
          });
       });
   }
-
 
   onRowSelected(row) {
     // only take action on the selected row
@@ -233,12 +235,6 @@ function mapStateToProps(state) {
 // vs trying import it and use it directly in the component
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
-    // hook up the functions you want to pass in to the component here
-    // fetchCoins: () => {
-    //   dispatch(fetchCoins()).then((response) => {
-    //         !response.error ? dispatch(fetchCoinsSuccess(response.payload.data)) : dispatch(fetchCoinsFailure(response.payload.data));
-    //       });
-    // },
     fetchCoins: fetchCoins
   }, dispatch)
 }
