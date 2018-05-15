@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class CoinHeader extends Component {
+export default class CoinHeader extends Component {
 
   // constructor(props) {
   //   super(props);
@@ -53,4 +53,4 @@ class CoinHeader extends Component {
 
 }
 
-export default CoinHeader;
+// export default CoinHeader;

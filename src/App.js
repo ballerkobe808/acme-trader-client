@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import AgGrid from './containers/AgGrid'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
+// import BootNav from './components/BootNav'
 // import UserList from './containers/UserList'
 // import UserDetail from './containers/UserDetail'
 
@@ -13,11 +14,12 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
+        {/* <BootNav /> */}
 
         <div className="container-fluid pt-4">
           <AgGrid />
         </div>
-        
+
         <Footer />
       </div>
     );

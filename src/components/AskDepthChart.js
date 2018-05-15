@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import Chart from 'chart.js';
-import dateFormat from 'dateformat';
+// import dateFormat from 'dateformat';
 
 
-class AskDepthChart extends Component {
+export default class AskDepthChart extends Component {
 
   constructor(props) {
     super(props);
@@ -74,4 +74,4 @@ class AskDepthChart extends Component {
 
 }
 
-export default AskDepthChart;
+// export default AskDepthChart;

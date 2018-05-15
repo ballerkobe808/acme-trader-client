@@ -4,7 +4,7 @@ import Chart from 'chart.js';
 import dateFormat from 'dateformat';
 
 
-class TradeChart extends Component {
+export default class TradeChart extends Component {
 
   constructor(props) {
     super(props);
@@ -72,4 +72,4 @@ class TradeChart extends Component {
 
 }
 
-export default TradeChart;
+// export default TradeChart;

@@ -4,7 +4,7 @@ import Chart from 'chart.js';
 import dateFormat from 'dateformat';
 
 
-class SpreadChart extends Component {
+export default class SpreadChart extends Component {
 
   constructor(props) {
     super(props);
@@ -87,4 +87,4 @@ class SpreadChart extends Component {
 
 }
 
-export default SpreadChart;
+// export default SpreadChart;

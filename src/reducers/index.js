@@ -11,6 +11,8 @@ import {combineReducers} from 'redux';
 // import UserReducer from './UserReducer';
 // import ActiveUserReducer from './ActiveUserReducer';
 import CoinListReducer from './CoinListReducer';
+import PollReducer from './PollReducer';
+import SettingsReducer from './SettingsReducer';
 
 
 // this is where we are defining what our main app store looks like
@@ -18,6 +20,8 @@ import CoinListReducer from './CoinListReducer';
 // so that it gets connected to the store
 const allReducers = combineReducers({
   coinList: CoinListReducer,
+  pollingTime: PollReducer,
+  settings: SettingsReducer,
   
   // users: UserReducer,
   // activeUser: ActiveUserReducer

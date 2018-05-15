@@ -42,7 +42,7 @@ class AgGrid extends Component {
     this.bootstrapTabs();
 
     this.props.fetchCoins();
-    this.startPoll();
+    // this.startPoll();
   }
 
  
@@ -51,8 +51,38 @@ class AgGrid extends Component {
     if (this.gridApi && !this.props.coinList.loading) {
       this.gridApi.hideOverlay();
     }
+    // if we changed from no polling to polling, then start the poll
+    if (!prevProps.pollingTime.doPollingprevProps && this.props.pollingTime.doPolling) {
+      this.startPoll();
+    }
+    // if we are stopping polling, then stop the current poll cycle
+    else if (prevProps.pollingTime.doPollingprevProps && !this.props.pollingTime.doPolling)  {
+      clearTimeout(this.timeout);
+    }
   }
 
+
+  // POSSIBLY HAVE A SETTINGS SECTION IN THE FUTURE
+  // settingsComponent() {
+  //   if (this.props.settings.showSettings) {
+  //     return (
+  //       <div className="col-12">
+  //         <div className="mb-1" style={{border: '1px solid lightgray', padding: '7px'}}>
+  //           Settings
+
+  //           Auto Refresh Data
+
+  //           Polling Cycle 
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  //   else {
+  //     return (
+  //       <div></div>
+  //     );
+  //   }
+  // }
 
   // table of cyrpto values on the left of the page
   agGridComponent() {
@@ -115,34 +145,30 @@ class AgGrid extends Component {
     }
 
     return (
-      <div className="row">
-      <div className="col-md-6">
-        {this.agGridComponent()}
+      <div>
+        {/* <div className="row">
+          <div className="col-12">
+            {this.settingsComponent()}
+          </div>
+        </div> */}
+        <div className="row">
+          <div className="col-md-6">
+            {this.agGridComponent()}
+          </div>
+          <div className="col-md-6 pt-2" style={{ display: detailDisplay}}>
+            {this.coinDetailsComponent()}
+          </div>
+        </div>
       </div>
-      <div className="col-md-6 pt-2" style={{ display: detailDisplay}}>
-        {this.coinDetailsComponent()}
-      </div>
-    </div>
     );
   }
 
 
   // user clicked to refresh data in the list
   refreshClick() {
-    // clear out the tab data
-    // this.setState(
-    //   {
-    //     spreadData: null,
-    //     tradeData: null,
-    //     bidDepthData: null,
-    //     askDepthData: null,
-    //     currentCoin: {}
-    //   }
-    // )
     // repull the data
     this.gridApi.showLoadingOverlay();
     this.props.fetchCoins();
-    // clearTimeout(this.timeout);
     this.startPoll();
   }
 
@@ -156,14 +182,17 @@ class AgGrid extends Component {
   // this is a recursive function, but it can be stopped
   // by clearing this.timeout
   startPoll() {
-    console.log('startpoll')
     clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      console.log('executing')
-      this.gridApi.showLoadingOverlay();
-      this.props.fetchCoins();
-      this.startPoll();
-    }, 30000);
+
+    // Check to see if user has polling enabled
+    if (this.props.pollingTime.doPolling) {
+      this.timeout = setTimeout(() => {
+        this.gridApi.showLoadingOverlay();
+        this.props.fetchCoins();
+        this.startPoll();
+      }, this.props.pollingTime.milliseconds);
+    }
+    
   }
 
   // had to use a jquery implementation of the tabs cuz the bootstrap ones
@@ -227,7 +256,10 @@ class AgGrid extends Component {
 // component actually gets
 function mapStateToProps(state) {
   return {
-    coinList: state.coinList
+    coinList: state.coinList,
+    pollingTime: state.pollingTime,
+    // settings: state.settings,
+
   }
 }
 

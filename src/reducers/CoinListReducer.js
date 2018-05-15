@@ -4,7 +4,7 @@
 
 export default function(state = {}, action) {
 
-  // console.log(action);
+  console.log(action);
 
   // column definitions for our coin table
   const columnDefs = [
@@ -82,14 +82,16 @@ export default function(state = {}, action) {
     // start out with just the column headers and no data until we get something
     // from the server
     default:
-      return {
-        columnDefs: columnDefs,
-        rowData: null,
-        loading: false
-      }; 
+    //   return state;
+      // return {
+      //   ...state,
+      //   columnDefs: columnDefs
+      //   // rowData: null,
+      //   // loading: false
+      // }; 
   };
 
 
-  
+  return state;
 
 }

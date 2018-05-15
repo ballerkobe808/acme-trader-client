@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import Chart from 'chart.js';
-import dateFormat from 'dateformat';
+// import dateFormat from 'dateformat';
 
 
-class BidDepthChart extends Component {
+export default class BidDepthChart extends Component {
 
   constructor(props) {
     super(props);
@@ -73,4 +73,4 @@ class BidDepthChart extends Component {
 
 }
 
-export default BidDepthChart;
+// export default BidDepthChart;

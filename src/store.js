@@ -9,7 +9,11 @@ import thunk from 'redux-thunk';
 
 import allReducers from './reducers/index'
 
-const initialState = {};
+const initialState = {
+  // default polling time to 5 minutes
+  pollingTime: {milliseconds: 300000, doPolling: false},
+  // settings: {pollTime: 300000, showSettings: false}
+};
 const enhancers = [];
 // using thunk for callback/promises and hooking up the react-router history middleware
 // const middleware = [thunk, routerMiddleware(history)];
