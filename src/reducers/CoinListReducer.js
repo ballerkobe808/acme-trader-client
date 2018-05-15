@@ -4,8 +4,6 @@
 
 export default function(state = {}, action) {
 
-  console.log(action);
-
   // column definitions for our coin table
   const columnDefs = [
     { headerName: "Symbol", field: "fullBase", width: 115 },
@@ -14,7 +12,6 @@ export default function(state = {}, action) {
     { headerName: "Market Cap", field: "marketcap", width: 160 },
     { headerName: "ERC20", field: "erc20", width: 100 }
   ]
-
 
   switch (action.type) {
     // this is sent when the data is beginning to load

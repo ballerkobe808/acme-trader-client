@@ -50,7 +50,7 @@ export default class AskDepthChart extends Component {
         datasets: [
           { 
           data: asks,
-          label: "Ask",
+          label: "Asks",
           borderColor: "#007bff",
           fill: false
           }, 

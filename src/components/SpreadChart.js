@@ -13,7 +13,6 @@ export default class SpreadChart extends Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props)
     // if there is data passed, show the chart
     if (this.props.data) {
       this.showChart(this.props.data.spreads)
@@ -46,13 +45,13 @@ export default class SpreadChart extends Component {
         labels: times,
         datasets: [{ 
           data: asks,
-          label: "Ask",
+          label: "Asks",
           borderColor: "#007bff",
           fill: false
         }, 
           { 
             data: bids,
-            label: "Bid",
+            label: "Bids",
             borderColor: "orange",
             fill: false
           }, 

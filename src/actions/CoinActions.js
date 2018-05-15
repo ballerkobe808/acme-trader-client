@@ -11,8 +11,15 @@ export function fetchCoins() {
 
   return function(dispatch) {
     dispatch({ type: "FETCH_COINS_START" });
+    let url 
+    if (process.env.NODE_ENV === 'production') {
+      url = '/assets'
+    }
+    else { // NODE_ENV = 'development or test'
+      url = 'http://localhost:3000/assets'
+    }
 
-    axios.get('http://localhost:3000/assets')
+    axios.get(url)
       .then(result => {
         // console.log('success:', result)
         dispatch({ type: "FETCH_COINS_FULFILLED", payload: result.data });

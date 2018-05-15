@@ -48,7 +48,7 @@ export default class BidDepthChart extends Component {
         datasets: [
           { 
             data: bids,
-            label: "Bid",
+            label: "Bids",
             borderColor: "orange",
             fill: false
           }, 
