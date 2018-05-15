@@ -15,7 +15,8 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 
-  import { setPoll, stopPoll } from '../actions/PollActions';
+import { setPoll, stopPoll } from '../actions/PollActions';
+
 
 class AcmeNavBar extends React.Component {
   constructor(props) {

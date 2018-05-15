@@ -14,7 +14,10 @@ export default class TradeChart extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.showChart(this.props.data)
+    // if there is data passed, show the chart
+    if (this.props.data) {
+      this.showChart(this.props.data.trades)
+    }
   }
  
 
@@ -22,7 +25,7 @@ export default class TradeChart extends Component {
     document.getElementById("trade-chart-container").innerHTML = '&nbsp;';
     document.getElementById("trade-chart-container").innerHTML = '<canvas id="trade-chart"></canvas>';
 
-    if (data == null) return; // fix this later
+    // if (data == null) return; // fix this later
 
     // setup the arrays of data used in the chart
     const times = data.map( trade => { 

@@ -12,7 +12,10 @@ export default class AskDepthChart extends Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-    this.showChart(this.props.data)
+    // if there is data passed, show the chart
+    if (this.props.data) {
+      this.showChart(this.props.data)
+    }
   }
 
   showChart(data) {
@@ -22,7 +25,7 @@ export default class AskDepthChart extends Component {
     document.getElementById("ask-depth-chart-container").innerHTML = '&nbsp;';
     document.getElementById("ask-depth-chart-container").innerHTML = '<canvas id="ask-depth-chart"></canvas>';
 
-    if (data == null) return; // fix this later
+    // if (data == null) return; // fix this later
 
     // setup the arrays of data used in the chart
     const asks = data.asks.map( depth => { return depth.volume})

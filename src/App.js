@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // main components to use in the app/page
-import CoinDashboard from './containers/CoinDashboard'
+import AcmeDashboard from './containers/AcmeDashboard'
 import AcmeNavbar from './containers/AcmeNavbar'
 import Footer from './components/Footer'
 
@@ -13,7 +13,7 @@ class App extends Component {
         <AcmeNavbar />
 
         <div className="container-fluid pt-4">
-          <CoinDashboard />
+          <AcmeDashboard />
         </div>
 
         <Footer />

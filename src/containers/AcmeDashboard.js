@@ -16,19 +16,16 @@ import BidDepthChart from '../components/BidDepthChart';
 import AskDepthChart from '../components/AskDepthChart';
 import CoinHeader from '../components/CoinHeader';
 
-class CoinDashboard extends Component {
+class AcmeDashboard extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      spreadData: null,
-      tradeData: null,
-      bidDepthData: null,
-      askDepthData: null,
-      currentCoin: {},
+      // current selected coin (and all the chart data with it)
+      currentCoin: null, 
       // had to add a template cuz the default position of the "Loading" html was showing up behind the selected row
-      overlayLoadingTemplate: '<span class="ag-overlay-loading-center" style="z-index: 100; position: relative;">Loading Data</span>',
+      overlayLoadingTemplate: '<span class="ag-overlay-loading-center" style="z-index: 100; position: relative;">Refreshing Data</span>',
     }
     // This binding is necessary to make `this` work in the callback
     this.refreshClick = this.refreshClick.bind(this);
@@ -74,7 +71,6 @@ class CoinDashboard extends Component {
         </AgGridReact>
         <button onClick={this.refreshClick} className="btn btn-secondary form-control">Refresh Data</button>
       </div>
-  
     );
   }
 
@@ -101,16 +97,16 @@ class CoinDashboard extends Component {
           </ul>
         </div>
         <section id="tab1" className="tab-content active">
-          <SpreadChart data={ this.state.spreadData } />
+          <SpreadChart data={ this.state.currentCoin } />
         </section>
         <section id="tab2" className="tab-content hide">
-          <TradeChart data={ this.state.tradeData } />
+          <TradeChart data={ this.state.currentCoin } />
         </section>
         <section id="tab3" className="tab-content hide">
-          <BidDepthChart data={ this.state.depthData } />
+          <BidDepthChart data={ this.state.currentCoin } />
         </section>
         <section id="tab4" className="tab-content hide">
-          <AskDepthChart data={ this.state.depthData } />
+          <AskDepthChart data={ this.state.currentCoin } />
         </section>
       </div>
     );
@@ -119,7 +115,7 @@ class CoinDashboard extends Component {
   render() {
     let detailDisplay = 'none';
     // only display the  coin detail component if there is information
-    if (this.state.currentCoin.name) {
+    if (this.state.currentCoin) {
       detailDisplay = 'block';
     }
 
@@ -141,7 +137,7 @@ class CoinDashboard extends Component {
   // user clicked to refresh data in the list
   refreshClick() {
     // repull the data
-    this.gridApi.showLoadingOverlay();
+    this.gridApi.showLoadingOverlay(); //have to call this manually - weird thing with the ag-grid it says no rows when the table is empty OR null
     this.props.fetchCoins();
     this.startPoll();
   }
@@ -152,7 +148,7 @@ class CoinDashboard extends Component {
     this.columnApi = params.columnApi;
   }
 
-   // pull data from the server every so many seconds
+  // pull data from the server every so many seconds
   // this is a recursive function, but it can be stopped
   // by clearing this.timeout
   startPoll() {
@@ -199,9 +195,6 @@ class CoinDashboard extends Component {
     if (row.node.selected) {
       this.setState ( {
         currentCoin: row.data,
-        spreadData: row.data.spreads,
-        tradeData: row.data.trades,
-        depthData: row.data,
       });
     }
   }
@@ -242,4 +235,4 @@ function matchDispatchToProps(dispatch) {
 
 // this will connect the component u just created and connect it to the mapStateToProps function
 // then export this new smart and connected component
-export default connect(mapStateToProps, matchDispatchToProps)(CoinDashboard);
+export default connect(mapStateToProps, matchDispatchToProps)(AcmeDashboard);

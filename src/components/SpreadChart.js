@@ -13,7 +13,11 @@ export default class SpreadChart extends Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-    this.showChart(this.props.data)
+    console.log(this.props)
+    // if there is data passed, show the chart
+    if (this.props.data) {
+      this.showChart(this.props.data.spreads)
+    }
   }
  
 
@@ -24,7 +28,7 @@ export default class SpreadChart extends Component {
     document.getElementById("spread-chart-container").innerHTML = '&nbsp;';
     document.getElementById("spread-chart-container").innerHTML = '<canvas id="spread-chart"></canvas>';
     
-    if (data == null) return; // fix this later
+    // if (data == null) return; // fix this later
 
     // setup the arrays of data used in the chart
     const times = data.map( spread => { 
