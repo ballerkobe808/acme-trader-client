@@ -11,7 +11,8 @@ export default function(state = {}, action) {
     { headerName: "Symbol", field: "fullBase", width: 115 },
     { headerName: "Name", field: "name", width: 140 },
     { headerName: "Last Traded", field: "lastTraded", width: 155 },
-    { headerName: "Market Cap", field: "marketcap", width: 160 }
+    { headerName: "Market Cap", field: "marketcap", width: 160 },
+    { headerName: "ERC20", field: "erc20", width: 100 }
   ]
 
 

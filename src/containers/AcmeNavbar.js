@@ -110,7 +110,7 @@ class AcmeNavBar extends React.Component {
                       </div>
                       <div style= {{display: 'inline-block', width: '260px', verticalAlign: 'top', paddingTop: '2px'}}>
                         Poll Data every
-                        <input defaultValue="30" onBlur={this.setPollInterval} className='form-control' type="number" style= {{width: '60px', display: 'inline', padding: '3px', textAlign: 'right', marginLeft: '3px'}} /> Seconds
+                        <input defaultValue="30" onBlur={this.setPollInterval} className='form-control' type="number" style= {{width: '60px', display: 'inline', padding: '3px', textAlign: 'right', marginLeft: '5px'}} /> Seconds
                       </div>
                     </div>
                   </DropdownMenu>
