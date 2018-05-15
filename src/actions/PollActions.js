@@ -1,4 +1,3 @@
-// import axios from "axios";
 
 // Actions are a way of telling the app that "something happened"
 // setup your action(s) here, these will be sent to one or more reducers

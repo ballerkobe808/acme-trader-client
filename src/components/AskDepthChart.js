@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 
 import Chart from 'chart.js';
-// import dateFormat from 'dateformat';
 
 
 export default class AskDepthChart extends Component {
 
   constructor(props) {
     super(props);
-    // this.state = { data: props.data }
     this.showChart = this.showChart.bind(this)
   }
 
@@ -16,7 +14,6 @@ export default class AskDepthChart extends Component {
   componentDidUpdate(prevProps, prevState) {
     this.showChart(this.props.data)
   }
- 
 
   showChart(data) {
     // chartjs needs to be destoryed before a new one is added
@@ -27,7 +24,7 @@ export default class AskDepthChart extends Component {
 
     if (data == null) return; // fix this later
 
-    // const title = dateFormat(new Date(), "dddd, mmmm dS, yyyy");
+    // setup the arrays of data used in the chart
     const asks = data.asks.map( depth => { return depth.volume})
     const prices = data.asks.map( depth => { return parseFloat(depth.price).toFixed(2)})
 
@@ -57,7 +54,6 @@ export default class AskDepthChart extends Component {
         ]
       },
       options: { 
-        // title: { display: true, text: title }, 
         title: { display: false }, 
         elements: { point: { radius: 0 } },
         animation: false
@@ -73,5 +69,3 @@ export default class AskDepthChart extends Component {
   }
 
 }
-
-// export default AskDepthChart;

@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import Chart from 'chart.js';
 import dateFormat from 'dateformat';
 
-
+/**
+ * This is the chart to display the list of trades
+ */
 export default class TradeChart extends Component {
 
   constructor(props) {
@@ -22,7 +24,7 @@ export default class TradeChart extends Component {
 
     if (data == null) return; // fix this later
 
-    // const title = dateFormat(new Date(data[0].time * 1000), "dddd, mmmm dS, yyyy");
+    // setup the arrays of data used in the chart
     const times = data.map( trade => { 
       // Create a new JavaScript Date object based on the timestamp
       // multiplied by 1000 so that the argument is in milliseconds, not seconds.
@@ -44,7 +46,6 @@ export default class TradeChart extends Component {
         ]
       },
       options: { 
-        // title: { display: true, text: title }, 
         title: { display: false }, 
         elements: { point: { radius: 0 } }, // dont show the datapoints make the line easier to read
         animation: false
@@ -53,7 +54,7 @@ export default class TradeChart extends Component {
   }
 
   render () {
-
+    // display the date of the timestamps of the data on the bottom
     let dateTime = '';
     if (this.props.data && this.props.data[0] && this.props.data[0].time) {
       dateTime = dateFormat(new Date(this.props.data[0].time * 1000), "dddd, mmmm dS, yyyy");
@@ -71,5 +72,3 @@ export default class TradeChart extends Component {
   }
 
 }
-
-// export default TradeChart;

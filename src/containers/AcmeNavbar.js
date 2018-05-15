@@ -15,14 +15,13 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 
-  import { toggleSettings } from '../actions/SettingsActions';
   import { setPoll, stopPoll } from '../actions/PollActions';
 
-class NavBar extends React.Component {
+class AcmeNavBar extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.showSettings = this.showSettings.bind(this);
+    // bind functions to this here so they get called in the right context
     this.setPollCheckbox = this.setPollCheckbox.bind(this);
     this.setPollInterval = this.setPollInterval.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -40,13 +39,7 @@ class NavBar extends React.Component {
     });
   }
 
-
-  // showSettings() {
-  //   this.props.toggleSettings();
-
-  // }
-
-  // if the user changes the second intervals
+  // called if the user changes the second intervals
   setPollInterval(event) {
     this.setState({
       secondInterval: event.target.value
@@ -55,7 +48,7 @@ class NavBar extends React.Component {
     });
   }
 
-  // if the user toggles the polling control
+  // called if the user toggles the polling control
   setPollCheckbox(event) {
     this.setState({
       pollFlag: event.target.checked
@@ -66,7 +59,9 @@ class NavBar extends React.Component {
 
   // decide whether to send out a polling action depending on what values were set
   checkSetPoll() {
-    if (this.state.pollFlag && this.state.secondInterval != '' && parseFloat(this.state.secondInterval) > 5 ) {
+    // set the polling to on, if the user selected to poll and if the value is greater than 3 (too low will mess this up)
+    // later add validation to the front for min poll number
+    if (this.state.pollFlag && this.state.secondInterval != '' && parseFloat(this.state.secondInterval) > 3 ) {
       this.props.setPoll(this.state.secondInterval * 1000);
     }
     else {
@@ -83,9 +78,7 @@ class NavBar extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              {/* <NavItem>
-                <NavLink href="#" onClick={this.showSettings}>Settings</NavLink>
-              </NavItem> */}
+             
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Kraken Bitcoin Exchange
@@ -95,10 +88,10 @@ class NavBar extends React.Component {
                     Kraken Bitcoin Exchange
                   </DropdownItem>
                   <DropdownItem disabled>
-                    Exchange X
+                    Coinbase (Coming Soon)
                   </DropdownItem>
                   <DropdownItem disabled>
-                  Exchange Y
+                    Bitfinex (Coming Soon)
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -150,7 +143,6 @@ function mapStateToProps(state) {
 // vs trying import it and use it directly in the component
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
-    toggleSettings: toggleSettings,
     setPoll: setPoll,
     stopPoll: stopPoll
   }, dispatch)
@@ -158,4 +150,4 @@ function matchDispatchToProps(dispatch) {
 
 // this will connect the component u just created and connect it to the mapStateToProps function
 // then export this new smart and connected component
-export default connect(mapStateToProps, matchDispatchToProps)(NavBar);
+export default connect(mapStateToProps, matchDispatchToProps)(AcmeNavBar);

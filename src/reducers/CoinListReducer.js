@@ -16,14 +16,12 @@ export default function(state = {}, action) {
 
 
   switch (action.type) {
-    // clear the row data to start
-    // later on add loading properties
+    // this is sent when the data is beginning to load
     case 'FETCH_COINS_START':
       return {
         ...state,
         loading: true
       }; 
-    // break;
 
     // we got the coins from the server
     case 'FETCH_COINS_FULFILLED':
@@ -79,16 +77,7 @@ export default function(state = {}, action) {
         loading: false
       }; 
 
-    // start out with just the column headers and no data until we get something
-    // from the server
     default:
-    //   return state;
-      // return {
-      //   ...state,
-      //   columnDefs: columnDefs
-      //   // rowData: null,
-      //   // loading: false
-      // }; 
   };
 
 

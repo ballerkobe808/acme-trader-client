@@ -16,7 +16,7 @@ import BidDepthChart from '../components/BidDepthChart';
 import AskDepthChart from '../components/AskDepthChart';
 import CoinHeader from '../components/CoinHeader';
 
-class AgGrid extends Component {
+class CoinDashboard extends Component {
 
   constructor(props) {
     super(props);
@@ -27,7 +27,7 @@ class AgGrid extends Component {
       bidDepthData: null,
       askDepthData: null,
       currentCoin: {},
-      // had to add a template cuz the default position was behind the selected row
+      // had to add a template cuz the default position of the "Loading" html was showing up behind the selected row
       overlayLoadingTemplate: '<span class="ag-overlay-loading-center" style="z-index: 100; position: relative;">Loading Data</span>',
     }
     // This binding is necessary to make `this` work in the callback
@@ -40,18 +40,17 @@ class AgGrid extends Component {
   // setup the tabs
   componentWillMount() {
     this.bootstrapTabs();
-
     this.props.fetchCoins();
-    // this.startPoll();
   }
 
  
   componentDidUpdate(prevProps, prevState) {
-    // if we came back and row data is there, clear any loading message
-    if (this.gridApi && !this.props.coinList.loading) {
+    // if we came back and it was loading, but now its not, then clear any loading message
+    if (this.gridApi && prevProps.coinList.loading && !this.props.coinList.loading) {
       this.gridApi.hideOverlay();
     }
-    // if we changed from no polling to polling, then start the poll
+
+    // if we changed from no polling to polling, then start the polling up
     if (!prevProps.pollingTime.doPollingprevProps && this.props.pollingTime.doPolling) {
       this.startPoll();
     }
@@ -62,27 +61,6 @@ class AgGrid extends Component {
   }
 
 
-  // POSSIBLY HAVE A SETTINGS SECTION IN THE FUTURE
-  // settingsComponent() {
-  //   if (this.props.settings.showSettings) {
-  //     return (
-  //       <div className="col-12">
-  //         <div className="mb-1" style={{border: '1px solid lightgray', padding: '7px'}}>
-  //           Settings
-
-  //           Auto Refresh Data
-
-  //           Polling Cycle 
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  //   else {
-  //     return (
-  //       <div></div>
-  //     );
-  //   }
-  // }
 
   // table of cyrpto values on the left of the page
   agGridComponent() {
@@ -105,6 +83,7 @@ class AgGrid extends Component {
     return (
       <div>
         <CoinHeader coin={ this.state.currentCoin } />
+
         <div className="tab-header">
           <ul className="nav nav-tabs">
             <li className="active">
@@ -146,11 +125,6 @@ class AgGrid extends Component {
 
     return (
       <div>
-        {/* <div className="row">
-          <div className="col-12">
-            {this.settingsComponent()}
-          </div>
-        </div> */}
         <div className="row">
           <div className="col-md-6">
             {this.agGridComponent()}
@@ -201,21 +175,16 @@ class AgGrid extends Component {
     $(document).ready(function() {
       $('.nav-tabs > li > a').click(function(event){
       event.preventDefault();//stop browser to take action for clicked anchor
-            
       //get displaying tab content jQuery selector
       var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');					
-            
       //find actived navigation and remove 'active' css
       var actived_nav = $('.nav-tabs > li.active');
       actived_nav.removeClass('active');
-            
       //add 'active' css into clicked navigation
       $(this).parents('li').addClass('active');
-            
       //hide displaying tab content
       $(active_tab_selector).removeClass('active');
       $(active_tab_selector).addClass('hide');
-            
       //show target tab content
       var target_tab_selector = $(this).attr('href');
       $(target_tab_selector).removeClass('hide');
@@ -273,4 +242,4 @@ function matchDispatchToProps(dispatch) {
 
 // this will connect the component u just created and connect it to the mapStateToProps function
 // then export this new smart and connected component
-export default connect(mapStateToProps, matchDispatchToProps)(AgGrid);
+export default connect(mapStateToProps, matchDispatchToProps)(CoinDashboard);

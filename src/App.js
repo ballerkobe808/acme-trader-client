@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
 
-
-// components to use in the app/page
-import AgGrid from './containers/AgGrid'
-import NavBar from './components/NavBar'
+// main components to use in the app/page
+import CoinDashboard from './containers/CoinDashboard'
+import AcmeNavbar from './containers/AcmeNavbar'
 import Footer from './components/Footer'
-// import BootNav from './components/BootNav'
-// import UserList from './containers/UserList'
-// import UserDetail from './containers/UserDetail'
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar />
-        {/* <BootNav /> */}
+        <AcmeNavbar />
 
         <div className="container-fluid pt-4">
-          <AgGrid />
+          <CoinDashboard />
         </div>
 
         <Footer />

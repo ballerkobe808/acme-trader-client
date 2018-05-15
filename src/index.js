@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux';
 
-
+// using bootstrap 4 (along with reactstrap)
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // libs from our app

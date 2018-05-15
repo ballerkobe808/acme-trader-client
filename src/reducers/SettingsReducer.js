@@ -6,7 +6,6 @@ export default function(state = {}, action) {
 
   switch (action.type) {
     case 'TOGGLE_SETTINGS':
-    // console.log(state)
       return {
         ...state,
         showSettings: !state.showSettings

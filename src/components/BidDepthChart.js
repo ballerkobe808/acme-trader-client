@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Chart from 'chart.js';
-// import dateFormat from 'dateformat';
 
 
 export default class BidDepthChart extends Component {
@@ -25,8 +24,7 @@ export default class BidDepthChart extends Component {
 
     if (data == null) return; // fix this later
 
-    // const title = dateFormat(new Date(data.bids[0].timestamp * 1000), "dddd, mmmm dS, yyyy");
-    // const title = dateFormat(new Date(), "dddd, mmmm dS, yyyy");
+    // setup the arrays of data used in the chart
     const bids = (data.bids.map( depth => { return depth.volume})).reverse();
     const prices = (data.bids.map( depth => { return parseFloat(depth.price).toFixed(2)})).reverse();
 
@@ -54,7 +52,6 @@ export default class BidDepthChart extends Component {
         ]
       },
       options: { 
-        // title: { display: true, text: title }, 
         title: { display: false }, 
         elements: { point: { radius: 0 } },
         animation: false
@@ -73,4 +70,3 @@ export default class BidDepthChart extends Component {
 
 }
 
-// export default BidDepthChart;

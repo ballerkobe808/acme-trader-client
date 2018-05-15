@@ -17,16 +17,8 @@ export default function(state = {}, action) {
         ...state,
         doPolling: false
       }; 
-    // break;
-    // break;
-
     
     default:
-      // return state;
-      // {
-      //   ...state
-      //   // milliseconds: 300000
-      // }; 
   };
 
   return state;
