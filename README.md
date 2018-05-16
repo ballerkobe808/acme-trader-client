@@ -12,7 +12,6 @@ It grabs current relevant trade data and displays them in graphical format. It a
 ## Requirements
 
 For development, you will only need Node.js installed on your environement.
-And please use the appropriate [Editorconfig](http://editorconfig.org/) plugin for your Editor (not mandatory).
 
 ### Node
 
@@ -21,10 +20,10 @@ You should be able to run the following command after the installation procedure
 below.
 
     $ node --version
-    v0.10.24
+    v6.10.3
 
     $ npm --version
-    1.3.21
+    3.10.10
 
 #### Node installation on OS X
 
@@ -63,6 +62,7 @@ Also, be sure to have `git` available in your PATH, `npm` might need it.
 ## Start & watch
 
     $ npm start
+    Point your browser to: http://localhost:8000
 
 
 ## Simple build for production
@@ -82,11 +82,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Redux
 
-https://github.com/reduxjs/redux
+- [Redux](https://github.com/reduxjs/redux) is the store manager used in the app.
 
 ### Ag-grid
 
-https://www.ag-grid.com/
+- [Ag-grid](https://www.ag-grid.com/) is used for the table to display the cryptocurrencies.
+
+### Chart.js
+
+- [Chart.js](http://www.chartjs.org/) is used to display the data graphically.
+
 
 
 
