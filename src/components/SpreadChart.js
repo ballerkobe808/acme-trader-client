@@ -69,8 +69,8 @@ export default class SpreadChart extends Component {
   render () {
     // display the date of the timestamps of the data on the bottom
     let dateTime = '';
-    if (this.props.data && this.props.data[0] && this.props.data[0].time) {
-      dateTime = dateFormat(new Date(this.props.data[0].time * 1000), "dddd, mmmm dS, yyyy");
+    if (this.props.data && this.props.data.spreads && this.props.data.spreads[0] && this.props.data.spreads[0].time) {
+      dateTime = dateFormat(new Date(this.props.data.spreads[0].time * 1000), "dddd, mmmm dS, yyyy");
     }
     
     return (
