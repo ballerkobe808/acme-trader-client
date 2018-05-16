@@ -22,3 +22,5 @@ yarn-error.log*
 
 #temp files
 temp
+
+.DS_Store
