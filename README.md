@@ -3,7 +3,7 @@
 
 This is a front end client built with ReactJs that will connect to the api served using the project at:
     
-    https://github.com/ballerkobe808/acme-api.git
+- https://github.com/ballerkobe808/acme-api.git
 
 It lists currencies at https://www.kraken.com/help/api#public-market-data that have matching USD pairs.
 It grabs current relevant trade data and displays them in graphical format. It also polls at a user specified frequency for the most up to date information   
@@ -11,11 +11,11 @@ It grabs current relevant trade data and displays them in graphical format. It a
 
 ## Requirements
 
-For development, you will only need Node.js installed on your environement.
+For development, you will need Node.js installed on your environement.
 
 ### Node
 
-[Node](http://nodejs.org/) is really easy to install & now include [NPM](https://npmjs.org/).
+[Node](http://nodejs.org/) is easy to install & now includes [NPM](https://npmjs.org/).
 You should be able to run the following command after the installation procedure
 below.
 
@@ -58,18 +58,15 @@ Also, be sure to have `git` available in your PATH, `npm` might need it.
     $ cd acme-trader-client
     $ npm install
 
-
 ## Start & watch
+By default, the app looks for the acme-api at http://localhost:3000. You will need to have the acme-api up and running in order to be able to use the functionality in the acme-trader-client. To start the client:
 
     $ npm start
     Point your browser to: http://localhost:8000
-
-
+    
 ## Simple build for production
 
     $ npm run build
-
-
 
 ---
 
