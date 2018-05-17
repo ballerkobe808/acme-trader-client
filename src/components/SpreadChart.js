@@ -27,7 +27,10 @@ export default class SpreadChart extends Component {
     document.getElementById("spread-chart-container").innerHTML = '&nbsp;';
     document.getElementById("spread-chart-container").innerHTML = '<canvas id="spread-chart"></canvas>';
     
-    // if (data == null) return; // fix this later
+    // data doesnt come in sorted consistently, so do that now
+    data.sort(function(a, b){
+      return a.time > b.time;
+    });
 
     // setup the arrays of data used in the chart
     const times = data.map( spread => { 
