@@ -34,7 +34,8 @@ export default class TradeChart extends Component {
       var date = new Date(trade.time*1000);
       return dateFormat(date, "h:MM TT");
     })
-    const trades = data.map( trade => { return trade.price})
+    // reverse so the earliest trades are on the left
+    const trades = (data.map( trade => { return trade.price})).reverse();
 
     new Chart(document.getElementById("trade-chart"), {
       type: 'line',

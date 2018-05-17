@@ -36,8 +36,10 @@ export default class SpreadChart extends Component {
       var date = new Date(spread.time*1000);
       return dateFormat(date, "h:MM TT");
     })
-    const bids = data.map( spread => { return spread.bid})
-    const asks = data.map( spread => { return spread.ask})
+
+    // reverse so the earliest bids/asks are on the left
+    const bids = (data.map( spread => { return spread.bid})).reverse();
+    const asks = (data.map( spread => { return spread.ask})).reverse();
 
     new Chart(document.getElementById("spread-chart"), {
       type: 'line',
