@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux';
 
 // using bootstrap 4 (along with reactstrap)
@@ -20,4 +21,6 @@ ReactDOM.render(
     <App />
   </Provider>
 , document.getElementById('root'));
-registerServiceWorker();
+
+unregister()
+// registerServiceWorker();
