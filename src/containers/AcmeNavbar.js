@@ -62,7 +62,7 @@ class AcmeNavBar extends React.Component {
   checkSetPoll() {
     // set the polling to on, if the user selected to poll and if the value is greater than 3 (too low will mess this up)
     // later add validation to the front for min poll number
-    if (this.state.pollFlag && this.state.secondInterval !== '' && parseFloat(this.state.secondInterval) > 3 ) {
+    if (this.state.pollFlag && this.state.secondInterval !== '' && parseFloat(this.state.secondInterval) > 0 ) {
       this.props.setPoll(this.state.secondInterval * 1000);
     }
     else {
