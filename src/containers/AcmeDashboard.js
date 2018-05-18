@@ -155,7 +155,7 @@ class AcmeDashboard extends Component {
     clearTimeout(this.timeout);
 
     // Check to see if user has polling enabled
-    if (this.props.pollingTime.doPolling) {
+    if (this.props.pollingTime.doPolling && !this.props.coinList.loading) {
       this.timeout = setTimeout(() => {
         this.gridApi.showLoadingOverlay();
         this.props.fetchCoins();
