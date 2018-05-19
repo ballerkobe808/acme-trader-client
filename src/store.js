@@ -1,10 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-// import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
-// import createHistory from 'history/createBrowserHistory';
-
-// this will be so we can use react-router and navigate around the single page app
-// export const history = createHistory();
 
 
 import allReducers from './reducers/index'
@@ -12,12 +7,10 @@ import allReducers from './reducers/index'
 const initialState = {
   // default polling time to 5 minutes
   pollingTime: {milliseconds: 300000, doPolling: false},
-  // settings: {pollTime: 300000, showSettings: false}
 };
 const enhancers = [];
-// using thunk for callback/promises and hooking up the react-router history middleware
-// const middleware = [thunk, routerMiddleware(history)];
 const middleware = [thunk];
+
 
 // extra feedback in development mode - dont include this when we build prod
 if (process.env.NODE_ENV === 'development') {

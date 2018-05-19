@@ -41,6 +41,7 @@ class AcmeDashboard extends Component {
   }
 
  
+  // if the propertys or state changed, then check to see if need to take any actions
   componentDidUpdate(prevProps, prevState) {
     // if we came back and it was loading, but now its not, then clear any loading message
     if (this.gridApi && prevProps.coinList.loading && !this.props.coinList.loading) {
@@ -48,13 +49,15 @@ class AcmeDashboard extends Component {
     }
 
     // if we changed from no polling to polling, then start the polling up
-    if (!prevProps.pollingTime.doPollingprevProps && this.props.pollingTime.doPolling) {
+    if (!prevProps.pollingTime.doPollingp && this.props.pollingTime.doPolling) {
       this.startPoll();
     }
     // if we are stopping polling, then stop the current poll cycle
-    else if (prevProps.pollingTime.doPollingprevProps && !this.props.pollingTime.doPolling)  {
+    else if (prevProps.pollingTime.doPolling && !this.props.pollingTime.doPolling)  {
       clearTimeout(this.timeout);
     }
+
+
   }
 
 
@@ -154,7 +157,8 @@ class AcmeDashboard extends Component {
   startPoll() {
     clearTimeout(this.timeout);
 
-    // Check to see if user has polling enabled
+    // Check to see if user has polling enabled, and we dont have
+    // a request out pending
     if (this.props.pollingTime.doPolling && !this.props.coinList.loading) {
       this.timeout = setTimeout(() => {
         this.gridApi.showLoadingOverlay();
@@ -199,13 +203,6 @@ class AcmeDashboard extends Component {
     }
   }
 
-  // autoSizeColumns() {
-  //   var allColumnIds = [];
-  //   this.columnApi.getAllColumns().forEach(function(column) {
-  //     allColumnIds.push(column.colId);
-  //   });
-  //   this.columnApi.autoSizeColumns(allColumnIds);
-  // }
 }
 
 
@@ -220,7 +217,6 @@ function mapStateToProps(state) {
   return {
     coinList: state.coinList,
     pollingTime: state.pollingTime,
-    // settings: state.settings,
 
   }
 }

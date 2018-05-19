@@ -7,7 +7,6 @@
 import {combineReducers} from 'redux';
 import CoinListReducer from './CoinListReducer';
 import PollReducer from './PollReducer';
-import SettingsReducer from './SettingsReducer';
 
 
 // This Reducer is the one that grabs all the other reducers, combines them into one, and
@@ -18,7 +17,6 @@ const allReducers = combineReducers({
   // so that it gets connected to the store
   coinList: CoinListReducer,
   pollingTime: PollReducer,
-  settings: SettingsReducer,
 });
 
 export default allReducers;
