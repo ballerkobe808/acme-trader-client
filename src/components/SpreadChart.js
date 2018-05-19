@@ -73,8 +73,14 @@ export default class SpreadChart extends Component {
     // display the date of the timestamps of the data on the bottom
     let dateTime = '';
     if (this.props.data && this.props.data.spreads && this.props.data.spreads[0] && this.props.data.spreads[0].time) {
-      dateTime = dateFormat(new Date(this.props.data.spreads[0].time * 1000), "dddd, mmmm dS, yyyy");
+      let spreadLength = this.props.data.spreads.length
+      let startDateTime = dateFormat(new Date(this.props.data.spreads[0].time * 1000), "dddd, mmmm dS, yyyy");
+      let endDateTime = dateFormat(new Date(this.props.data.spreads[spreadLength - 1].time * 1000), "dddd, mmmm dS, yyyy");
+      // if the start and end date are different, then show the range, otherwise just show one date
+      dateTime = (startDateTime === endDateTime) ? startDateTime  : startDateTime + ' - ' + endDateTime;
     }
+
+
     
     return (
       <div>
