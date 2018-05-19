@@ -25,7 +25,7 @@ class AcmeDashboard extends Component {
       // current selected coin (and all the chart data with it)
       currentCoin: null, 
       // had to add a template cuz the default position of the "Loading" html was showing up behind the selected row
-      overlayLoadingTemplate: '<span class="ag-overlay-loading-center" style="z-index: 100; position: relative;">Refreshing Data</span>',
+      overlayLoadingTemplate: '<span class="ag-overlay-loading-center" style="z-index: 100; position: relative;">Refreshing Data <i class="fa fa-circle-o-notch fa-spin"></span>',
     }
     // This binding is necessary to make `this` work in the callback
     this.refreshClick = this.refreshClick.bind(this);
