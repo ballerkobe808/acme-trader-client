@@ -6,11 +6,11 @@ export default function(state = {}, action) {
 
   // column definitions for our coin table
   const columnDefs = [
-    { headerName: "Symbol", field: "fullBase", width: 115 },
+    { headerName: "Symbol", field: "fullBase", width: 110 },
     { headerName: "Name", field: "name", width: 140 },
-    { headerName: "Last Traded", field: "lastTraded", width: 155 },
+    { headerName: "Last Traded", field: "lastTraded", width: 140 },
     { headerName: "Market Cap", field: "marketcap", width: 160 },
-    { headerName: "ERC20", field: "erc20", width: 100 }
+    { headerName: "ERC20", field: "erc20", width: 80 }
   ]
 
   switch (action.type) {

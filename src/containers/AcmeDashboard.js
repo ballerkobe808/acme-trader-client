@@ -65,7 +65,7 @@ class AcmeDashboard extends Component {
   // table of cyrpto values on the left of the page
   agGridComponent() {
     return (
-      <div className="ag-theme-balham col-12 mb-4" style= {{ height: '450px' }}>
+      <div className="ag-theme-balham mb-4 pb-4" style= {{ height: '450px' }}>
         <AgGridReact style= {{ height: '400px' }} enableSorting={true} 
         enableFilter={true} columnDefs={this.props.coinList.columnDefs} 
         rowData={this.props.coinList.rowData} onGridReady={this.onGridReady} 
