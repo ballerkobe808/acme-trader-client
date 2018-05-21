@@ -8,19 +8,19 @@ export default class CoinHeader extends Component {
   // }
 
   render () {
-    let priceChange
-    let priceChangePercent
+    let priceChange = ''
+    let priceChangePercent = ''
     let changeColor = 'green';
 
     // calculate the data to be displayed
-    if (this.props.coin && this.props.coin.trades && this.props.coin.trades[0]) {
-      let valChange = (parseFloat(this.props.coin.last_traded) - this.props.coin.trades[0].price)
-      let decmialPlaces = this.props.coin.display_decimals
-      if (decmialPlaces == null || parseFloat(this.props.coin.display_decimals) < 3) decmialPlaces = 3;
-      priceChange = valChange.toFixed(decmialPlaces);
-      priceChangePercent = ((valChange / this.props.coin.trades[0].price) * 100).toFixed(2)
-      if (priceChange < 0) changeColor = 'red'
-    }
+    // if (this.props.coin && this.props.coin.trades && this.props.coin.trades[0]) {
+    //   let valChange = (parseFloat(this.props.coin.last_traded) - this.props.coin.trades[0].price)
+    //   let decmialPlaces = this.props.coin.display_decimals
+    //   if (decmialPlaces == null || parseFloat(this.props.coin.display_decimals) < 3) decmialPlaces = 3;
+    //   priceChange = valChange.toFixed(decmialPlaces);
+    //   priceChangePercent = ((valChange / this.props.coin.trades[0].price) * 100).toFixed(2)
+    //   if (priceChange < 0) changeColor = 'red'
+    // }
     
 
     // only display if there is data to display
