@@ -25,18 +25,18 @@ export default class TradeChart extends Component {
     document.getElementById("trade-chart-container").innerHTML = '&nbsp;';
     document.getElementById("trade-chart-container").innerHTML = '<canvas id="trade-chart"></canvas>';
 
-    // data doesnt come in sorted consistently, so do that now
-    data.sort(function(a, b){
-      if (a.time < b.time) {
-        return -1;
-      }
-      else if (a.time > b.time) {
-        return 1;
-      }
-      else {
-        return 0;
-      }
-    });
+    // // data doesnt come in sorted consistently, so do that now
+    // data.sort(function(a, b){
+    //   if (a.time < b.time) {
+    //     return -1;
+    //   }
+    //   else if (a.time > b.time) {
+    //     return 1;
+    //   }
+    //   else {
+    //     return 0;
+    //   }
+    // });
     // setup the arrays of data used in the chart
     const times = data.map( trade => { 
       // Create a new JavaScript Date object based on the timestamp
