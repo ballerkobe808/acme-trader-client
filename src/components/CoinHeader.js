@@ -13,7 +13,7 @@ export default class CoinHeader extends Component {
     let changeColor = 'green';
 
     // calculate the data to be displayed
-    if (this.props.coin) {
+    if (this.props.coin && this.props.coin.trades && this.props.coin.trades[0]) {
       let valChange = (parseFloat(this.props.coin.last_traded) - this.props.coin.trades[0].price)
       let decmialPlaces = this.props.coin.display_decimals
       if (decmialPlaces == null || parseFloat(this.props.coin.display_decimals) < 3) decmialPlaces = 3;
