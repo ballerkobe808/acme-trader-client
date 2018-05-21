@@ -11,12 +11,9 @@ class App extends Component {
     return (
       <div className="App">
         <AcmeNavbar />
-
         <div className="container-fluid pt-4">
           <AcmeDashboard />
         </div>
-
-        <Footer />
       </div>
     );
   }
