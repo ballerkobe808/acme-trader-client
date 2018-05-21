@@ -84,6 +84,7 @@ export default function(state = {}, action) {
       })
 
       return {
+        ...state,
         columnDefs: columnDefs,
         rowData: action.payload,
         loading: false
