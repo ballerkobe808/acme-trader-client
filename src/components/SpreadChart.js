@@ -29,16 +29,25 @@ export default class SpreadChart extends Component {
     
     // data doesnt come in sorted consistently, so do that now
     data.sort(function(a, b){
-      return a.time > b.time;
+      if (a.time < b.time) {
+        return -1;
+      }
+      else if (a.time > b.time) {
+        return 1;
+      }
+      else {
+        return 0;
+      }
     });
-
     // setup the arrays of data used in the chart
+    
     const times = data.map( spread => { 
       // Create a new JavaScript Date object based on the timestamp
       // multiplied by 1000 so that the argument is in milliseconds, not seconds.
       var date = new Date(spread.time*1000);
       return dateFormat(date, "h:MM TT");
     })
+    
     const bids = data.map( spread => { return spread.bid})
     const asks = data.map( spread => { return spread.ask})
 

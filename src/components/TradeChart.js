@@ -27,7 +27,15 @@ export default class TradeChart extends Component {
 
     // data doesnt come in sorted consistently, so do that now
     data.sort(function(a, b){
-      return a.time > b.time;
+      if (a.time < b.time) {
+        return -1;
+      }
+      else if (a.time > b.time) {
+        return 1;
+      }
+      else {
+        return 0;
+      }
     });
     // setup the arrays of data used in the chart
     const times = data.map( trade => { 
