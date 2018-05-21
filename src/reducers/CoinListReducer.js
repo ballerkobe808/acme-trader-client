@@ -13,7 +13,7 @@ export default function(state = {}, action) {
   ]
 
 
-  // sort any array by the time property if the array exists
+  // sort an array of objects by the time property 
   const sortData = function(data) {
     if (data) {
       data.sort(function(a, b) {
@@ -28,7 +28,8 @@ export default function(state = {}, action) {
     }
   }
 
-  // conrt a value into a displayable usd, using the number of decimals to the right passed
+  // convert a value into a displayable usd, use the decmialPlaces passed in to
+  // determine how many decimals to the right will be displayed
   const valueToUsd = function(value, decmialPlaces) {
     let newValue = 'no data found'
     // quick solution taken from:
