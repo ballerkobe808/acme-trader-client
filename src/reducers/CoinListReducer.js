@@ -34,7 +34,6 @@ export default function(state = {}, action) {
     // quick solution taken from:
     // https://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-dollars-currency-string-in-javascript
     if (value) {
-      console.log(value)
       newValue = '$' + (parseFloat(value)).toFixed(decmialPlaces).replace(/./g, function(c, i, a) {
         // dont add commas right of the decimal
         if (i <= a.indexOf('.')) {
